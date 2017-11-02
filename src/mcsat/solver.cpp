@@ -97,6 +97,7 @@ Solver::Solver(context::UserContext* userContext, context::Context* searchContex
   addPlugin("CVC4::mcsat::UFPlugin");
   addPlugin("CVC4::mcsat::FMPlugin");
   addPlugin("CVC4::mcsat::BCPEngine");
+  addPlugin("CVC4::mcsat::LRAPlugin");
 }
 
 Solver::~Solver() {

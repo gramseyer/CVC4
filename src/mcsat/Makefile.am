@@ -26,9 +26,10 @@ libmcsat_la_LIBADD = \
 	@builddir@/cnf/libmcsat_cnf.la \
 	@builddir@/bcp/libmcsat_bcp.la \
 	@builddir@/fm/libmcsat_fm.la \
-	@builddir@/uf/libmcsat_uf.la 
+	@builddir@/uf/libmcsat_uf.la \
+        @builddir@/lra/libmcsat_lra.la
 
 EXTRA_DIST = 
 
-SUBDIRS = variable clause util rules plugin cnf bcp fm uf . 
+SUBDIRS = variable clause util rules plugin cnf bcp fm uf lra . 
 
