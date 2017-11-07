@@ -6,6 +6,7 @@ using namespace mcsat;
 
 LRAPlugin::LRAPlugin(ClauseDatabase& database, const SolverTrail& trail, SolverPluginRequest& request)
   : SolverPlugin(database, trail, request)
+  , boolTypeIdx(VariableDatabase::getCurrentDB()->getTypeIndex(NodeManager::currentNM()->booleanType()))
   {
   Debug("mcsat::lra") << "Starting LRA Plugin" << std::endl;
 }
@@ -19,7 +20,11 @@ void LRAPlugin::propagate(SolverTrail::PropagationToken& out) {
 
 void LRAPlugin::decide(SolverTrail::DecisionToken& out, Variable var) {
 }
-
+void LRAPlugin::newConstraint(Variable constraint) {
+    Debug("mcsat::lra")<<"LRAPLUGIN::newConstraint("<<constraint<<")"<<std::endl;
+    Assert(!isLinearConstraint(constraint), "Already registered");
+    
+}
 
 std::string LRAPlugin::toString() const {
   return "Linear Real Arithmetic Plugin";
