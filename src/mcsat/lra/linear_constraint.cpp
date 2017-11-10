@@ -65,8 +65,18 @@ bool LinearConstraint::parse(TNode t, Rational m, var_rational_pair_vector& coef
              Assert(t.getNumChildren() == 2 && t[0].isConst());
              return parse(t[1], m*t[0].getConst<Rational>(), coefficientMap);
         case kind::PLUS:
+             for (unsigned i = 0; i < t.getNumChildren(); i++) {
+                 parse(t[i], m, coefficientMap);
+             }
+             break;
         case kind::MINUS:
+             Assert(t.getNumChildren() == 2);
+             parse(t[0], m, coefficientMap);
+             parse(t[1], -m, coefficientMap);
+             break;
         case kind::UMINUS:
+             parse(t[0], -m, coefficientMap);
+             break;
         default:
             Variable v = db.getVariable(term);
             coefficientMap.push_back(var_rational_pair(v, m));
@@ -92,6 +102,7 @@ void LinearConstraint::toStream(std::ostream& out) const {
 }
 
 bool LinearConstraint::evaluate(const SolverTrail& trail, unsigned& level) {
+    Debug("mcsat::lra") << "Evaluating" << this <<std::endl;
     Rational lhsValue = coefficients[0].second;
     for (unsigned i = 1; i < coefficients.size(); i++) {
         Variable var = coefficients[i].first;
@@ -117,10 +128,18 @@ bool LinearConstraint::evaluate(const SolverTrail& trail, unsigned& level) {
     return false;
 }
 
+void swap(LinearConstraint& c) {
+    coefficients.swap(c.coefficients);
+    std::swap(kind, c.kind);
+    std::swap(isUnit, c.isUnit);
+    std::swap(unitVar, c.unitVar);
+}
 
-
-
-
-
-
-
+void getVariables(std::vector<Variable> vars) const {
+    var_rational_pair_vector::const_iterator iter = coefficients.begin();
+    while (iter != coefficients.end()) {
+        if (!(iter->first.isNull)) {
+             vars.push_back (iter->first);
+        }
+    }
+}
