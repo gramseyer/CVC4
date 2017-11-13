@@ -16,6 +16,8 @@ libmcsat_rules_la_SOURCES = \
 	resolution_rule.cpp \
 	fourier_motzkin_rule.h \
 	fourier_motzkin_rule.cpp \
+        fm_rule_copy.h \
+        fm_rule_copy.cpp \
 	int_split_rule.h \
 	int_split_rule.cpp \
 	ackermann_rule.h \

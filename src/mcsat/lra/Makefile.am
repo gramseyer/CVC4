@@ -9,7 +9,9 @@ noinst_LTLIBRARIES = libmcsat_lra.la
 
 libmcsat_lra_la_SOURCES = \
 	lra_plugin.h \
-	lra_plugin.cpp
+	lra_plugin.cpp \
+        linear_constraint.h \
+        linear_constraint.cpp
 	
 EXTRA_DIST = 
 
