@@ -1080,9 +1080,15 @@ void SmtEngine::finishInit() {
   d_decisionEngine->init();   // enable appropriate strategies
 
   Trace("smt-debug") << "Making prop engine..." << std::endl;
-  d_propEngine = new PropEngine(d_theoryEngine, d_decisionEngine, d_context,
+  if (options::mcsat()) {
+    d_propEngine = new mcsat::PropEngine(d_theoryEngine, d_decisionEngine, d_context,
+                                       d_userContext, d_private->getReplayLog(),
+                                       d_replayStream, d_channels);
+  } else {
+    d_propEngine = new PropEngine(d_theoryEngine, d_decisionEngine, d_context,
                                 d_userContext, d_private->getReplayLog(),
                                 d_replayStream, d_channels);
+  }
 
   Trace("smt-debug") << "Setting up theory engine..." << std::endl;
   d_theoryEngine->setPropEngine(d_propEngine);
