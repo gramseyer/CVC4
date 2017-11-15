@@ -133,7 +133,7 @@ Literal TseitinCnfStream::handleImplies(TNode impliesNode) {
 
 Literal TseitinCnfStream::handleIff(TNode iffNode) {
   Assert(!alreadyTranslated(iffNode), "Atom already mapped!");
-  Assert(iffNode.getKind() == kind::IFF, "Expecting an IFF expression!");
+  Assert(iffNode.getKind() == kind::EQUAL, "Expecting an IFF expression!");
   Assert(iffNode.getNumChildren() == 2, "Expecting exactly 2 children!");
 
   Debug("mcsat::cnf") << "handleIff(" << iffNode << ")" << endl;
